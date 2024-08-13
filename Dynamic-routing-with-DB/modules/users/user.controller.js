@@ -4,7 +4,7 @@ const { genhash, verifyhash } = require("../../utils/secure");
 const usermodel = require("./user.model");
 //bulk data (payload)
 const create = async (payload) => {
-  const { password, ...rest } = payload;
+  const { password, isActive, role, ...rest } = payload;
   rest.password = genhash(password);
   console.log({ rest });
 
