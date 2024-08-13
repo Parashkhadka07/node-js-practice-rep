@@ -60,3 +60,20 @@ router.get("/", (req, res) => {
 });
 
 module.exports = router;
+/** have to use in create means post method 
+  
+ router.post("/",async(req,res,next)=>{
+  try{const result=await userController.create(req.body);
+  res.json({data:result,msg:"user created sucessfully"})}
+  catch(e){next(e)}
+ 
+
+
+
+
+
+
+
+
+
+**/
