@@ -36,12 +36,18 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 router.post(
-  "/register",
+  "/:register",
   verify(["admin"]),
   upload.single("profilepic"),
   async (req, res, next) => {
     try {
-      const result = await usercontroller.create(req.body);
+      const URL = "https://localhost:7777/resources/uploads/";
+      const image = URL + req?.file?.filename;
+      req.body.filename = image;
+      if (req?.file?.filename) {
+        req.body.image = image;
+      }
+      const result = await usercontroller.register(req.body);
 
       res.json({
         data: `user created sucessfully `,
@@ -51,5 +57,13 @@ router.post(
     }
   }
 );
+router.post("/login", async (req, res, next) => {
+  try {
+    const result = await usercontroller.login(req.body);
+    res.json({ data: result, msg: "user logged in sucessfully" });
+  } catch (e) {
+    next(e);
+  }
+});
 
 module.exports = router;
